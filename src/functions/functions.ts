@@ -7,7 +7,9 @@
 function getEpisodeCount(MAL_URL: string): Promise<number> {
     var propertyStart = '<span class="dark_text">Episodes:</span>';
     var propertyEnd = '</div><div><span class="dark_text">Status:</span>';  
-    return fetch(MAL_URL)
+    var proxyURL = "https://cors-anywhere.herokuapp.com/"
+    console.log("called")
+    return fetch(proxyURL + MAL_URL)
         .then((response) => {
             return response.text()
         })
@@ -30,7 +32,9 @@ CustomFunctions.associate("GETEPISODECOUNT", getEpisodeCount);
 function getRomajiName(MAL_URL: string): Promise<string> {
     var propertyStart = "<span itemprop=\"name\">";
     var propertyEnd = "</span>";
-    return fetch(MAL_URL)
+    var proxyURL = "https://cors-anywhere.herokuapp.com/"
+    console.log("called2")
+    return fetch(proxyURL + MAL_URL)
         .then((response) => {
             return response.text()
         })
@@ -59,6 +63,7 @@ function getMALidFromURL(urlMal: string): number {
   var endStr = '/'
   var end = endUrl.indexOf(endStr)
   var finalVal = endUrl.slice(0, end)
+  console.log("called3")
   return parseInt(finalVal)
 }
 CustomFunctions.associate("GETMALID", getMALidFromURL);
@@ -73,6 +78,7 @@ CustomFunctions.associate("GETMALID", getMALidFromURL);
 function getEnglishName(MAL_URL: string): Promise<string> {
     var malId = getMALidFromURL(MAL_URL);
     var APIUrl = "https://kitsu.io/api/edge/mappings?filter[externalSite]=myanimelist%2Fanime&filter[externalId]="+malId+"&include=item&page[limit]=20";
+    console.log("called4")
     return fetch(APIUrl)
         .then((response) => {
             return response.text()
